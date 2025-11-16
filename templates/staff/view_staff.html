@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="nk-block-head nk-block-head-sm mb-4">
+    <h3 class="nk-block-title">Staff Profile</h3>
+</div>
+
+<div class="row g-4">
+
+    <!-- Left: Photo & Basic Info -->
+    <div class="col-lg-4">
+        <div class="card card-bordered shadow-sm">
+            <div class="card-inner text-center">
+
+                {% if profile.profile_photo %}
+                    <img src="{{ profile.profile_photo.url }}" 
+                         class="rounded-circle mb-3" 
+                         style="width: 150px; height: 150px; object-fit: cover;">
+                {% else %}
+                    <img src="{% static 'images/avatar-placeholder.png' %}" 
+                         class="rounded-circle mb-3" 
+                         style="width: 150px; height: 150px; object-fit: cover;">
+                {% endif %}
+
+                <h4 class="fw-bold">{{ profile.user.get_full_name }}</h4>
+                <p class="text-muted">{{ profile.get_role_display }}</p>
+
+                <p class="text-soft">
+                    <em class="icon ni ni-mail"></em> {{ profile.user.email }}
+                    <br>
+                    <em class="icon ni ni-call"></em> {{ profile.phone }}
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Right: Details -->
+    <div class="col-lg-8">
+        <div class="card card-bordered shadow-sm">
+            <div class="card-inner">
+
+                <h5 class="title mb-3">Profile Information</h5>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <p class="text-muted mb-1">Full Name</p>
+                        <p class="fw-bold">{{ profile.user.get_full_name }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="text-muted mb-1">Username</p>
+                        <p class="fw-bold">{{ profile.user.username }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="text-muted mb-1">Department</p>
+                        <p class="fw-bold">{{ profile.department|default:"-" }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="text-muted mb-1">Phone Number</p>
+                        <p class="fw-bold">{{ profile.phone|default:"-" }}</p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <p class="text-muted mb-1">Address</p>
+                        <p class="fw-bold">{{ profile.address|default:"No address added" }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="text-muted mb-1">Emergency Contact</p>
+                        <p class="fw-bold">{{ profile.emergency_contact|default:"-" }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="text-muted mb-1">Date Joined</p>
+                        <p class="fw-bold">{{ profile.date_joined }}</p>
+                    </div>
+
+                </div>
+
+                <div class="mt-4">
+                    <a href="{% url 'staff:edit' profile.id %}" 
+                       class="btn btn-primary">
+                       <em class="icon ni ni-edit"></em> Edit Profile
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

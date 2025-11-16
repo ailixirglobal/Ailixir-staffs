@@ -1,0 +1,6 @@
+{% load i18n %}
+<div class="space-y-4">
+  {% for field in attrs.form %}
+        {% include 'allauth/elements/field.html' with field=field attrs=field.field.widget.attrs %}
+  {% endfor %}
+</div>

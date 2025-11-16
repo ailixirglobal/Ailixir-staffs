@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h3 class="nk-block-title">All Lab Notes</h3>
+            <p class="text-soft">Records of all research lab notes in Ailixir Global.</p>
+        </div>
+    </div>
+</div>
+
+<div class="nk-block">
+    <div class="card card-bordered">
+        <div class="card-inner">
+
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Experiment</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Date</th>
+                        <th>Attachment</th>
+                        <th>View</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for note in notes %}
+                    <tr>
+                        <td>{{ note.experiment.title }}</td>
+                        <td>{{ note.title }}</td>
+                        <td>{{ note.author.get_full_name }}</td>
+                        <td>{{ note.created_at|date:"M d, Y" }}</td>
+
+                        <td>
+                            {% if note.attachment %}
+                                <a href="{{ note.attachment.url }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                    Download
+                                </a>
+                            {% else %}
+                                <span class="text-muted">---</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{% url 'research:experiment_detail' note.experiment.id %}" 
+                               class="btn btn-sm btn-info">
+                                Open
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">
+                            No lab notes have been recorded yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+django
+requests
+whitenoise
+python-dotenv
+django-htmx
+djangorestframework

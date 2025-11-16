@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="nk-block">
+
+    <h3 class="nk-block-title">{{ exp.title }}</h3>
+    <p>{{ exp.description }}</p>
+
+    <a href="{% url 'research:labnote_add' exp.id %}" class="btn btn-primary mb-3">
+        Add Lab Note
+    </a>
+
+    <div class="card card-bordered">
+        <div class="card-inner">
+
+            <h5>Lab Notes</h5>
+
+            {% for note in notes %}
+            <div class="border-bottom py-2">
+                <h6>{{ note.title }}</h6>
+                <p>{{ note.note }}</p>
+
+                {% if note.attachment %}
+                <a href="{{ note.attachment.url }}" target="_blank">Download Attachment</a>
+                {% endif %}
+
+                <small class="text-muted">
+                    By {{ note.author.get_full_name }} • {{ note.created_at }}
+                </small>
+            </div>
+            {% empty %}
+            <p>No lab notes yet.</p>
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load form_filters %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3 class="fw-bold mb-4">Add Product Category</h3>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <form method="post" class="row g-4">
+                {% csrf_token %}
+
+                <div class="col-md-6">
+                    <label class="form-label">Category Name</label>
+                    {{ form.name|add_class:"form-control" }}
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Description</label>
+                    {{ form.description|add_class:"form-control" }}
+                </div>
+
+                <div class="col-12">
+                    <button class="btn btn-primary w-100">Save Category</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

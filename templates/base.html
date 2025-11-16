@@ -1,0 +1,180 @@
+{% load static %}
+{% load perm_tags %}
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+<head>
+    <base href="../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="./images/favicon.png">
+    <!-- Page Title  -->
+    <title>Blank - Layout | DashLite Admin Template</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static '/assets/css/dashlite.css' %}">
+    <link id="skin-default" rel="stylesheet" href="{% static '/assets/css/theme.css' %}">
+</head>
+
+<body class="nk-body ui-rounder has-sidebar ">
+    <div class="nk-app-root">
+        <div style="width:75% !important;" class="nk-sidebar" data-content="sidebarMenu">
+          <div class="nk-sidebar-main is-light">
+                <div class="nk-sidebar-inner" data-simplebar>
+                  <div class="nk-menu-content menu-active" data-content="navPharmacy">
+                      <h5 class="title">Ailixir Global Ltd</h5>
+                      <ul class="nk-menu">
+                  
+
+                          {% for item in role_menu %}
+                              {% if item.perm and request.user|has_perm:item.perm %}
+                              <li class="nk-menu-item">
+                                  <a href="{% url item.url %}" class="nk-menu-link">
+                                      <span class="nk-menu-icon"><em class="icon ni {{ item.icon }}"></em></span>
+                                      <span class="nk-menu-text">{{ item.name }}</span>
+                                  </a>
+                              </li>
+                              {% endif %}
+                              {% if not item.perm %}
+                              <li class="nk-menu-item">
+                                  <a href="{% url item.url %}" class="nk-menu-link">
+                                      <span class="nk-menu-icon"><em class="icon ni {{ item.icon }}"></em></span>
+                                      <span class="nk-menu-text">{{ item.name }}</span>
+                                  </a>
+                              </li>
+                              {% endif %}
+                          {% endfor %}
+                  
+                          <!-- Sign Out (visible to everyone) -->
+                          <li class="nk-menu-item">
+                              <a href="{% url 'account_logout' %}" class="nk-menu-link">
+                                  <span class="nk-menu-icon"><em class="icon ni ni-signout"></em></span>
+                                  <span class="nk-menu-text">Sign Out</span>
+                              </a>
+                          </li>
+                  
+                      </ul>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- main header @s -->
+                <div class="nk-header nk-header-fixed nk-header-fluid is-light">
+                    <div class="container-fluid">
+                        <div class="nk-header-wrap">
+                            <div class="nk-menu-trigger d-xl-none ml-n1">
+                                <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
+                            </div>
+                            <div class="nk-header-brand d-xl-none">
+                                <a href="/" class="logo-link">
+                                    <img class="logo-img" src="{% static '/images/logo-light2.png' %}" alt="logo">
+                                </a>
+                            </div><!-- .nk-header-brand -->
+                            <div class="nk-header-tools">
+                                <ul class="nk-quick-nav">
+                                    <li class="dropdown notification-dropdown">
+                                        <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
+                                            
+                                            <div class="icon-status {% if unread_count > 0 %}icon-status-info{% endif %}">
+                                                <em class="icon ni ni-bell"></em>
+                                            </div>
+                                            
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end">
+                                            <div class="dropdown-head">
+                                                <span class="sub-title nk-dropdown-title">Notifications</span>
+                                                <a href="#">Mark All as Read</a>
+                                            </div>
+                                            <div class="dropdown-body">
+                                              <div class="nk-notification">
+                                          
+                                                  {% for notif in latest_notifications %}
+                                                  <a href="{% url 'notifications:view' notif.id %}">
+                                                    <div class="nk-notification-item dropdown-inner">
+                                                        <div class="nk-notification-icon">
+                                                            <em class="icon icon-circle bg-warning-dim ni ni-bell"></em>
+                                                        </div>
+                                                        <div class="nk-notification-content">
+                                                            <div class="nk-notification-text">{{ notif.notification.title }}</div>
+                                                            <div class="nk-notification-time">{{ notif.notification.created_at|timesince }} ago</div>
+                                                        </div>
+                                                    </div>
+                                                  </a>
+                                                  {% empty %}
+                                                  <p class="p-3 text-center text-soft">No notifications yet</p>
+                                                  {% endfor %}
+                                          
+                                              </div>
+                                          </div>
+                                            <div class="dropdown-foot center">
+                                                <a href="#">View All</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="dropdown user-dropdown">
+                                        <a href="#" class="dropdown-toggle mr-n1" data-bs-toggle="dropdown">
+                                            <div class="user-toggle">
+                                                <div class="user-avatar sm">
+                                                    <em class="icon ni ni-user-alt"></em>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-end">
+                                            <div class="dropdown-inner user-card-wrap bg-lighter">
+                                                <div class="user-card">
+                                                    <div class="user-avatar">
+                                                        <span>ST</span>
+                                                    </div>
+                                                    <div class="user-info">
+                                                        <span class="lead-text">{{ user.get_full_name }}</span>
+                                                        <span class="sub-text">{{ user.email }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown-inner">
+                                                <ul class="link-list">
+                                                    <li><a href="{% url 'staff:my_profile' %}"><em class="icon ni ni-user-alt"></em><span>View Profile</span></a></li>
+                                                    <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
+                                                </ul>
+                                            </div>
+                                            
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div><!-- .nk-header-wrap -->
+                    </div><!-- .container-fliud -->
+                </div>
+                <!-- main header @e -->
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                {% block content %}
+                                {% endblock content %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+    <!-- JavaScript -->
+    <script src="{% static '/assets/js/bundle.js' %}"></script>
+    <script src="{% static '/assets/js/scripts.js' %}"></script>
+    {% block extra_js %}
+    {% endblock extra_js %}
+</body>
+
+</html>

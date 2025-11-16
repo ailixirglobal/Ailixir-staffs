@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h3 class="nk-block-title">AI Settings</h3>
+            <p class="text-soft">Customize Ailixir AI behavior and context.</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="nk-block">
+    <div class="card card-bordered card-stretch">
+        <div class="card-inner">
+
+            <form method="post">
+                {% csrf_token %}
+
+                <h5 class="title mb-2">AI Behavior</h5>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">AI Model</label>
+                        {{ form.ai_model }}
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Temperature</label>
+                        {{ form.temperature }}
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Max Tokens</label>
+                        {{ form.max_tokens }}
+                    </div>
+
+                </div>
+
+                <hr class="my-4">
+
+                <h5 class="title mb-2">Research Context</h5>
+
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label class="form-label">Active Experiment</label>
+                        {{ form.active_experiment }}
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h5 class="title mb-2">Product Context</h5>
+
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label class="form-label">Products to include in AI context</label>
+                        {{ form.context_products }}
+                        <small class="text-soft">Select multiple products if needed.</small>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h5 class="title mb-2">Custom System Prompt</h5>
+
+                <div class="form-group">
+                    <label class="form-label">System Prompt</label>
+                    {{ form.system_prompt }}
+                    <small class="text-soft">Optional: overrides AI default behavior.</small>
+                </div>
+
+                <hr class="my-4">
+
+                <h5 class="title mb-2">General Preferences</h5>
+
+                <div class="row g-3">
+                    <div class="col-md-6 form-check">
+                        {{ form.use_history }}
+                        <label class="form-check-label">Enable chat history</label>
+                    </div>
+
+                    <div class="col-md-6 form-check">
+                        {{ form.use_role_context }}
+                        <label class="form-check-label">Enable role-based intelligence</label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary mt-4">
+                    Save Settings
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

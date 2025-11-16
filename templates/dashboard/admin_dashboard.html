@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h3 class="nk-block-title">Administrator Dashboard</h3>
+            <p class="text-soft">Overview of Ailixir Global Limited system metrics.</p>
+        </div>
+    </div>
+</div>
+
+<div class="nk-block">
+    <div class="row g-gs">
+
+        <!-- Total Staff -->
+        <div class="col-md-3">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <div class="nk-ecwg">
+                        <div class="data">
+                            <h6 class="title">Total Staff</h6>
+                            <h3 class="amount">{{ total_staff }}</h3>
+                        </div>
+                        <div class="icon">
+                            <em class="icon ni ni-users"></em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Staff -->
+        <div class="col-md-3">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <div class="nk-ecwg">
+                        <div class="data">
+                            <h6 class="title">Active Staff</h6>
+                            <h3 class="amount">{{ active_staff }}</h3>
+                        </div>
+                        <div class="icon text-success">
+                            <em class="icon ni ni-user-check"></em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Departments / Roles -->
+        <div class="col-md-3">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <div class="nk-ecwg">
+                        <div class="data">
+                            <h6 class="title">Distinct Roles</h6>
+                            <h3 class="amount">{{ roles_count }}</h3>
+                        </div>
+                        <div class="icon text-info">
+                            <em class="icon ni ni-network"></em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Users -->
+        <div class="col-md-3">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <div class="nk-ecwg">
+                        <div class="data">
+                            <h6 class="title">System Accounts</h6>
+                            <h3 class="amount">{{ total_users }}</h3>
+                        </div>
+                        <div class="icon text-warning">
+                            <em class="icon ni ni-user"></em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Optional Chart Section -->
+    <div class="row g-gs mt-2">
+        <div class="col-md-12">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <h5 class="title mb-3">Staff Overview</h5>
+                    <canvas id="staffChart" style="height:300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+var ctx = document.getElementById("staffChart").getContext("2d");
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Total Staff", "Active", "Roles", "Accounts"],
+        datasets: [{
+            label: "Staff Overview",
+            data: [{{ total_staff }}, {{ active_staff }}, {{ roles_count }}, {{ total_users }}],
+            backgroundColor: ['#6576ff','#1ee0ac','#ffa353','#f4bd0e'],
+            borderWidth: 1,
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+</script>
+{% endblock %}

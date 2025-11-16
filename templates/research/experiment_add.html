@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="nk-block-head">
+    <h3 class="nk-block-title">Add Experiment</h3>
+</div>
+
+<form method="post" class="card card-bordered p-3">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label>Title</label>
+        <input name="title" class="form-control" required>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Description</label>
+        <textarea name="description" class="form-control" required></textarea>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Start Date</label>
+        <input type="date" name="start_date" class="form-control" required>
+    </div>
+
+    <button class="btn btn-primary mt-3">Save</button>
+</form>
+{% endblock %}

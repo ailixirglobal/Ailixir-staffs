@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h3 class="fw-bold mb-3">Edit Permissions — {{ role.get_name_display }}</h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <p class="text-muted mb-3">Select the actions this role is allowed to perform.</p>
+
+                <div class="row g-3">
+
+                    {% for perm in permissions %}
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input 
+                                class="form-check-input"
+                                type="checkbox"
+                                name="permissions"
+                                value="{{ perm.id }}"
+                                {% if perm.id in assigned %}checked{% endif %}
+                            >
+                            <label class="form-check-label">
+                                {{ perm.name }}
+                            </label>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+                <button class="btn btn-success mt-4">Save Permissions</button>
+
+            </div>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

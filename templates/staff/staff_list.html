@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h3 class="nk-block-title">Staff Members</h3>
+            <p class="text-soft">Manage all Ailixir Global Limited staff.</p>
+        </div>
+        <div class="nk-block-head-content">
+          {% if perms.staff.add_staffprofile %}
+            <a href="{% url 'staff:add' %}" class="btn btn-primary">
+                <em class="icon ni ni-user-add"></em>
+                <span>Add Staff</span>
+            </a>
+          {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="nk-block">
+    <div class="card card-bordered">
+        <div class="card-inner p-0">
+            <table class="table table-ulogs">
+                <thead>
+                    <tr>
+                        <th>Staff</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for staff in staffs %}
+                    <tr>
+                        <td>
+                            <div class="user-card">
+                                <div class="user-avatar bg-white border border-1 text-dark">
+                                    {% if staff.profile_photo %}
+                                    <img style="object-fit:cover; width:100%; height:100%" src="{{ staff.profile_photo.url }}" alt="photo">
+                                    {% else %}
+                                    <span>{{ staff.user.first_name|slice:":1" }}{{ staff.user.last_name|slice:":1" }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="user-info">
+                                    <span class="tb-lead">{{ staff.user.get_full_name }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ staff.role.get_name_display|title }}</td>
+                        <td>{{ staff.department }}</td>
+                        <td>{{ staff.user.email }}</td>
+                        <td>{{ staff.phone }}</td>
+
+                        <td class="text-right">
+                            <a href="{% url 'staff:detail' staff.id %}" class="btn btn-xs btn-info">View</a>
+                           {% if perms.staff.change_staffprofile %}
+                            <a href="{% url 'staff:edit' staff.id %}" class="btn btn-xs btn-warning">Edit</a>
+                           {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center p-4">No staff found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

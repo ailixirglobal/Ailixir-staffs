@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h3 class="fw-bold mb-4">Assign Role — {{ staff.user.get_full_name }}</h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <label class="form-label fw-bold">Select Role</label>
+                <select name="role" class="form-select">
+                    {% for r in roles %}
+                    <option value="{{ r.name }}"
+                        {% if staff.role == r.name %}selected{% endif %}>
+                        {{ r.get_name_display }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <button class="btn btn-success mt-3">Save Role</button>
+
+            </div>
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}

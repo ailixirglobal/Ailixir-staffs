@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Chat with Ailixir AI</h2>
+
+<div 
+  id="chat-box" 
+  hx-get="{% url 'ai:chatinterface' session.session_id %}" 
+  hx-trigger="load" 
+  hx-target="#chat-box" 
+  hx-swap="innerHTML"
+  class="chat-box"
+  style="border:1px solid #ccc; padding:10px; height:400px; overflow-y:auto;"
+>
+  <!-- Messages will load here -->
+</div>
+
+<form 
+  id="chat-form"
+  hx-post="{% url 'ai:chatinterface' session.session_id %}"
+  hx-target="#chat-box"
+  hx-swap="beforeend"
+  hx-on::after-request="this.reset()"
+  class="mt-3"
+>
+  {% csrf_token %}
+  <input 
+    type="text" 
+    id="userinput"
+    name="userinput" 
+    placeholder="Type your message..." 
+    required 
+    class="form-control"
+  >
+  <button type="submit" class="btn btn-primary mt-2">Send</button>
+</form>
+
+<script src="https://unpkg.com/htmx.org@2.0.0"></script>
+
+<script>
+  // Show user message instantly before server response
+  document.getElementById('chat-form').addEventListener('submit', function(e) {
+    const input = document.getElementById('userinput');
+    const chatBox = document.getElementById('chat-box');
+
+    // Clone the user's message
+    const userMessage = document.createElement('div');
+    userMessage.classList.add('message', 'user');
+    userMessage.innerHTML = `<strong>You:</strong> ${input.value}`;
+    chatBox.appendChild(userMessage);
+
+    // Scroll down immediately
+    chatBox.scrollTop = chatBox.scrollHeight;
+  });
+
+  // Scroll chat box after HTMX updates (AI response)
+  document.body.addEventListener('htmx:afterSwap', function(evt) {
+    if (evt.target.id === "chat-box") {
+      const chatBox = document.getElementById('chat-box');
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  });
+
+  // Ensure CSRF token is added for all HTMX POSTs
+  document.body.addEventListener('htmx:configRequest', (event) => {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    event.detail.headers['X-CSRFToken'] = csrfToken;
+  });
+</script>
+{% endblock %}
