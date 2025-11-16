@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ga!s5io(kjm$_0wp51^cve1&e93-ukwk4m#y8)-urnqik(#j84
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["staff.ailixirglobal.com", "localhost"]
 
 
 # Application definition
