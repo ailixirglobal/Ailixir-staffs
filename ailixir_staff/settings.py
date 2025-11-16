@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
-    'guardian',
-    'corsheaders',
 
     # Local app
     'core',
