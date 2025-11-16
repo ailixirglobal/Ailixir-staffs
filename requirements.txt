@@ -4,3 +4,4 @@ whitenoise
 python-dotenv
 django-htmx
 djangorestframework
+django-allauth
