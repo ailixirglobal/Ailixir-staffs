@@ -59,6 +59,7 @@ def chatinterface(request, session_id):
       usersession.messages.create(role='user', content=userInput)
       usersession.messages.create(role='assistant', content=response['message']['content'])
       context['message'] = response['message']
+      return render(request, 'ai/_message.html', context)
       
       if request.htmx:
         return render(request, 'ai/_message.html', context)
