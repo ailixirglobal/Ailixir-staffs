@@ -123,7 +123,7 @@ def make_request(userinput, m=[], c={}):
     
 def build_ai_context(user):
   
-    settings = AIUserSettings.objects.get_or_create(user=user)
+    settings, created = AIUserSettings.objects.get_or_create(user=user)
 
     context = {"role":"user", "content": ""}
     content = f"My name is {user.get_full_name()}"
