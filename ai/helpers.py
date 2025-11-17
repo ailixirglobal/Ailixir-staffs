@@ -3,6 +3,7 @@ import json
 import requests
 from dotenv import load_dotenv
 from pathlib import Path
+from .models import AIUserSettings
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -117,12 +118,12 @@ def make_request(userinput, m=[], c={}):
         "messages": messages,
         "model": "Qwen/Qwen3-VL-8B-Instruct:novita"
     })
-    print(response)
     return response["choices"][0]
     
     
 def build_ai_context(user):
-    settings = user.ai_settings
+  
+    settings = AIUserSettings.objects.get_or_create(user=user)
 
     context = {"role":"user", "content": ""}
     content = f"My name is {user.get_full_name()}"
