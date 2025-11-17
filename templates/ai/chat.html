@@ -127,7 +127,7 @@
         hx-target="#chat-box"
         hx-swap="beforeend"
         hx-on::after-request="this.reset()"
-        method="post"
+        
         >
 
         {% csrf_token %}
@@ -145,7 +145,7 @@
 {% endif %}
 {% endblock content %}
 
-{% block exttra_js %}
+{% block extra_js %}
 <script src="https://unpkg.com/htmx.org@2.0.0"></script>
 
 <script>
@@ -181,4 +181,4 @@
             document.querySelector('[name="csrfmiddlewaretoken"]').value;
     });
 </script>
-{% endblock exttra_js %}
+{% endblock extra_js %}
