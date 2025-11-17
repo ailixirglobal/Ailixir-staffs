@@ -126,7 +126,9 @@
         hx-post="{% url 'ai:chatinterface' usersession.session_id %}"
         hx-target="#chat-box"
         hx-swap="beforeend"
-        hx-on::after-request="this.reset()">
+        hx-on::after-request="this.reset()"
+        method="post"
+        >
 
         {% csrf_token %}
 
