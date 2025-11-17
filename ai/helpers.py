@@ -117,7 +117,7 @@ def make_request(userinput, m=[], c={}):
         "messages": messages,
         "model": "Qwen/Qwen3-VL-8B-Instruct:novita"
     })
-
+    print(response)
     return response["choices"][0]
     
     

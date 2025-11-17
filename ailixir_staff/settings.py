@@ -56,7 +56,11 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
+CSRF_TRUSTED_ORIGINS = [
+    "https://staff.ailixirglobal.com",
+    "https://www.staff.ailixirglobal.com",
+]
+LOGIN_REDIRECT_URL = '/staffs/'
 LOGOUT_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = (
